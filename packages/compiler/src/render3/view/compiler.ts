@@ -35,6 +35,7 @@ import {asLiteral, conditionallyCreateDirectiveBindingLiteral, DefinitionMap} fr
 const COMPONENT_VARIABLE = '%COMP%';
 const HOST_ATTR = `_nghost-${COMPONENT_VARIABLE}`;
 const CONTENT_ATTR = `_ngcontent-${COMPONENT_VARIABLE}`;
+const ANIMATE_LEAVE = `animate.leave`;
 
 function baseDirectiveFields(
   meta: R3DirectiveMetadata,
@@ -99,6 +100,16 @@ function baseDirectiveFields(
   }
 
   return definitionMap;
+}
+
+function hasAnimationHostBinding(
+  meta: R3DirectiveMetadata | R3ComponentMetadata<R3TemplateDependency>,
+): boolean {
+  return (
+    meta.host.attributes[ANIMATE_LEAVE] !== undefined ||
+    meta.host.properties[ANIMATE_LEAVE] !== undefined ||
+    meta.host.listeners[ANIMATE_LEAVE] !== undefined
+  );
 }
 
 /**
